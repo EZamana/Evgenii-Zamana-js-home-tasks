@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>task1</title>
+</head>
+<body>
+  <script>
+      let a = prompt("Введите слово");
+
+      function vowelsCount(a) {
+          let vowels = "aоэиуыеёюя";
+          let counter = 0;
+          a = a.toLowerCase();
+          a = a.split("");
+          for (let i = 0; i < a.length; i++) {
+              let letter = a[i];
+              let letterPosition = vowels.indexOf(letter);
+              if (letterPosition >= 0) {
+                  counter = counter + 1;
+              }
+          }
+          return counter;
+      }
+
+      console.log(vowelsCount(a));
+  </script>
+</body>
+</html>
