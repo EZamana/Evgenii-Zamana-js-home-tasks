@@ -9,7 +9,14 @@
       let firstName = prompt('Ваше имя?');
       let lastName = prompt('Ваша фамилия?');
       let middleName = prompt('Ваше отчество?');
-      let age = parseInt(prompt('Ваш возраст?'));
+      for (let i = 0; ; i++) {
+          let age = parseInt(prompt('Ваш возраст?'));
+          if (isNaN(age)) {
+              continue;
+          } else {
+              break;
+          }
+      }
       let gender = confirm('Ваш пол мужской?');
       let fullName = lastName + " " + firstName + " " + middleName;
       let ageInDays = age * 365;
@@ -26,9 +33,34 @@
           pension = "нет";
       }
       let message = 'ваше ФИО:' + ' ' + fullName + '\n' + 'ваш возраст в годах:' + ' ' + age + '\n'
-              + 'ваш возраст в днях:' + ' ' + ageInDays + '\n' + 'через 5 лет вам будет:' + ' ' +
-              ageAfterFiveYears + '\n' + 'ваш пол:' + ' ' + gender + '\n' + 'вы на пенсии:' + ' ' + pension;
+          + 'ваш возраст в днях:' + ' ' + ageInDays + '\n' + 'через 5 лет вам будет:' + ' ' +
+          ageAfterFiveYears + '\n' + 'ваш пол:' + ' ' + gender + '\n' + 'вы на пенсии:' + ' ' + pension;
       alert(message);
   </script>
 </body>
 </html>
+
+<!--
+function firstNameValidation(a) {
+let a = prompt('Ваше имя?');
+a = a.trim();
+for (let i = 0; ; i++) {
+if (typeof(a) == null || a.length === 0) {
+continue;
+} else {
+return a;
+}
+}
+}
+let b;
+firstNameValidation(b);
+console.log(b);
+
+/*for (let i = 0; ; i++) {
+let age = parseInt(prompt('Ваш возраст?'));
+if (isNaN(age)) {
+continue;
+} else {
+break;
+}
+}*/-->
