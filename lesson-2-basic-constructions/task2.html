@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <script>
+      let firstName = prompt('Ваше имя?');
+      let lastName = prompt('Ваша фамилия?');
+      let middleName = prompt('Ваше отчество?');
+      let age = parseInt(prompt('Ваш возраст?'));
+      let gender = confirm('Ваш пол мужской?');
+      let fullName = lastName + " " + firstName + " " + middleName;
+      let ageInDays = age * 365;
+      let ageAfterFiveYears = age + 5;
+      let pension;
+      if (gender) {
+          gender = "мужской"
+      } else {
+          gender = "женский"
+      }
+      if (age >= 60) {
+          pension = "да";
+      } else {
+          pension = "нет";
+      }
+      let message = 'ваше ФИО:' + ' ' + fullName + '\n' + 'ваш возраст в годах:' + ' ' + age + '\n'
+              + 'ваш возраст в днях:' + ' ' + ageInDays + '\n' + 'через 5 лет вам будет:' + ' ' +
+              ageAfterFiveYears + '\n' + 'ваш пол:' + ' ' + gender + '\n' + 'вы на пенсии:' + ' ' + pension;
+      alert(message);
+  </script>
+</body>
+</html>

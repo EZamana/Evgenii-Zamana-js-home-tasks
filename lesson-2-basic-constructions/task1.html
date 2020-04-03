@@ -6,15 +6,15 @@
 </head>
 <body>
   <script>
-      let a = prompt("Введите слово");
+      let userWord = prompt("Введите слово");
 
-      function vowelsCount(a) {
-          let vowels = "aоэиуыеёюя";
+      function vowelsCount(userWord) {
+          let vowels = "аоэиуыеёюя";
           let counter = 0;
-          a = a.toLowerCase();
-          a = a.split("");
-          for (let i = 0; i < a.length; i++) {
-              let letter = a[i];
+          userWord = userWord.toLowerCase();
+          userWord = userWord.split("");
+          for (let i = 0; i < userWord.length; i++) {
+              let letter = userWord[i];
               let letterPosition = vowels.indexOf(letter);
               if (letterPosition >= 0) {
                   counter = counter + 1;
@@ -23,7 +23,7 @@
           return counter;
       }
 
-      console.log(vowelsCount(a));
+      console.log(vowelsCount(userWord));
   </script>
 </body>
 </html>
