@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <script>
+    let tasksCompleted = {
+        'Anna': 29,
+        'Serg': 35,
+        'Elena': 1,
+        'Anton': 99
+    };
+
+    let taskCounter = 0;
+    let winner;
+
+    for (let key in tasksCompleted) {
+        if (tasksCompleted[key] > taskCounter) {
+            taskCounter = tasksCompleted[key];
+            winner = key;
+        }
+    }
+    console.log(winner);
+  </script>
+</body>
+</html>

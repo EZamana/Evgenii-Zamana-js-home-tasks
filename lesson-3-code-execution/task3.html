@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <script>
+    let values = [];
+    let total = 0;
+    for (let i=0; ; i++) {
+        let value = prompt("Введите число");
+        if (value === null) {
+            break;
+        }
+        value = value.trim();
+        value = parseInt(value);
+        if (isNaN(value)) {
+            break;
+        } else {
+            values.push(value);
+        }
+    };
+    for (let i = 0; i < values.length; i++) {
+        total = total + values[i];
+    }
+    console.log(total);
+  </script>
+</body>
+</html>
