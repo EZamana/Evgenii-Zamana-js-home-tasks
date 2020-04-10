@@ -6,11 +6,11 @@
 </head>
 <body>
   <script>
-    let a = 8;
-    for (let i = 1; i < a + 1; i++) {
+    let cellSize = 8;
+    for (let i = 1; i < cellSize + 1; i++) {
        if (i % 2 === 0) {
            let string = "";
-           for (let i = 1; i < a + 1; i++) {
+           for (let i = 1; i < cellSize + 1; i++) {
                if (i % 2 === 0) {
                    string = string + "#";
                } else if (i % 2 !== 0) {
@@ -20,7 +20,7 @@
            console.log(string);
        } else if (i % 2 !== 0) {
            let string = "";
-           for (let i = 1; i < a + 1; i++) {
+           for (let i = 1; i < cellSize + 1; i++) {
                if (i % 2 === 0) {
                    string = string + " ";
                } else if (i % 2 !== 0) {
