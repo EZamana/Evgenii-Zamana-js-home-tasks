@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <script>
+      function isPal(str) {
+          str = str.toLowerCase();
+          for (let i = 0; i < str.length; i++) {
+              str = str.replace(' ', '');
+          }
+          let strReverse = str.split('').reverse().join('');
+          return  strReverse === str;
+      }
+  </script>
+</body>
+</html>

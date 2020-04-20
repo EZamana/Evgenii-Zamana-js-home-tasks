@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <script>
+      function anClean(arr) {
+          let objWithUnWords = {};
+          for (let i = 0; i < arr.length; i++) {
+              let sortWord = arr[i].toLowerCase().split("").sort().join("");
+              objWithUnWords[sortWord] = arr[i];
+          }
+          return Object.values(objWithUnWords);
+      }
+  </script>
+</body>
+</html>
