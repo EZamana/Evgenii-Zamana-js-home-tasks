@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .clockFaceStyle {
+      border-radius: 50%;
+      border: 3px solid black;
+      margin: 0 auto;
+    }
+
+    .numberStyle {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 32px;
+    }
+
+    .hourArrowStyle, .minuteArrowStyle, .secondArrowStyle {
+      position: absolute;
+      background-color: black;
+      border-radius: 5px;
+      transform-origin: 10%;
+    }
+
+    .digitalWatchStyle {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 52px;
+    }
+  </style>
+</head>
+<body>
+  <script>
+      const container = document.createElement('div');
+      const clockFaceRadius = 550;
+      const numberRadius = 65;
+      const radiusToNumber = 230;
+      const hourArrowWidth = 170;
+      const hourArrowHeight = 12;
+      const minuteArrowWidth = 250;
+      const minuteArrowHeight = 7;
+      const secondArrowWidth = 260;
+      const secondArrowHeight = 3;
+      const digitalWatchWidth = 230;
+      const digitalWatchHeight = 80;
+
+      let clockFace = document.createElement('div');
+      clockFace.setAttribute('class', 'clockFaceStyle');
+      clockFace.style.width = clockFaceRadius + "px";
+      clockFace.style.height = clockFaceRadius + "px";
+      clockFace = document.body.appendChild(container).appendChild(clockFace);
+
+      function numberGener(className, radius) {
+          let number = document.createElement('div');
+          number.setAttribute('class', 'numberStyle');
+          number.style.width = radius + "px";
+          number.style.height = radius + "px";
+          return number;
+      }
+
+      let clockFaceCenterX = clockFace.offsetLeft + clockFace.offsetWidth / 2;
+      let clockFaceCenterY = clockFace.offsetTop + clockFace.offsetHeight / 2;
+
+      for (let i = 1; i <= 12; i++) {
+          let number = numberGener('numberStyle', numberRadius);
+          let numberReady = clockFace.appendChild(number);
+          number.innerHTML = String(i);
+          let angle = i / 12 * Math.PI * 2;
+          let numberPositionX = clockFaceCenterX + Math.sin(angle) * radiusToNumber;
+          let numberPositionY = clockFaceCenterY - Math.cos(angle) * radiusToNumber;
+          number.style.left = Math.round(numberPositionX - number.offsetWidth / 2) + 'px';
+          number.style.top = Math.round(numberPositionY - number.offsetHeight / 2) + 'px';
+      }
+
+      let digitalWatch = document.createElement('div');
+      digitalWatch.setAttribute('class', 'digitalWatchStyle');
+      digitalWatch = clockFace.appendChild(digitalWatch);
+      digitalWatch.style.width = digitalWatchWidth + 'px';
+      digitalWatch.style.height = digitalWatchHeight + 'px';
+      digitalWatch.style.left = clockFaceCenterX - digitalWatch.offsetWidth / 2 + 'px';
+      digitalWatch.style.top = clockFaceCenterY - digitalWatch.offsetHeight * 1.5 + 'px';
+      digitalWatch.innerHTML = '--' + ':' + '--' + ':' + '--';
+
+      function arrowCreate(className, height, width, parent, parentCenterX, parentCenterY) {
+          let arrow = document.createElement('div');
+          arrow.setAttribute('class', className);
+          arrow = parent.appendChild(arrow);
+          arrow.style.width = width + "px";
+          arrow.style.height = height + "px";
+          arrow.style.left = parentCenterX - arrow.offsetWidth / 10 + 'px';
+          arrow.style.top = parentCenterY - arrow.offsetHeight / 2 + 'px';
+          return arrow
+      }
+
+      let hourArrow = arrowCreate('hourArrowStyle', hourArrowHeight, hourArrowWidth, clockFace, clockFaceCenterX, clockFaceCenterY);
+      let minuteArrow = arrowCreate('minuteArrowStyle', minuteArrowHeight, minuteArrowWidth, clockFace, clockFaceCenterX, clockFaceCenterY);
+      let secondArrow = arrowCreate('secondArrowStyle', secondArrowHeight, secondArrowWidth, clockFace, clockFaceCenterX, clockFaceCenterY);
+
+      function digitalTimeHandler(time) {
+          time = time.toString();
+          if (time.length === 1) {
+              time = "0" + time;
+          }
+          return time
+      }
+
+      function ourArrowOffset(angle) {
+          hourArrow.style.transform = `rotate(${angle}deg)`;
+      }
+
+      function minuteArrowOffset(angle) {
+          minuteArrow.style.transform = `rotate(${angle}deg)`;
+      }
+
+      function secondArrowOffset(angle) {
+          secondArrow.style.transform = `rotate(${angle}deg)`;
+      }
+
+      function getCurrentHour() {
+          let currentTime = new Date();
+          let currentHour = currentTime.getHours();
+          let currentMinute = currentTime.getMinutes();
+          let our = Number(currentHour.toString());
+          if (our > 12) {
+              our = our - 12;
+          }
+          let ourAngle = our* 30;
+          let minute = Number(currentMinute.toString());
+          let minuteAngle = Math.round(minute/12)*6;
+          let OurArrowAngle = ourAngle + minuteAngle - 90;
+          ourArrowOffset(OurArrowAngle);
+      }
+
+      function getCurrentMinute() {
+          let currentTime = new Date();
+          let currentMinute = currentTime.getMinutes();
+          let minuteArrowAngle = Number(currentMinute.toString())*6 - 90;
+          minuteArrowOffset(minuteArrowAngle);
+      }
+
+      function getCurrentSecond() {
+          let currentTime = new Date();
+          let currentSecond = currentTime.getSeconds();
+          let secondArrowAngle = Number(currentSecond.toString())*6 - 90;
+          secondArrowOffset(secondArrowAngle);
+      }
+
+      function getCurrentDigitalTime() {
+          let currentTime = new Date();
+          let currentHour = currentTime.getHours();
+          let currentMinute = currentTime.getMinutes();
+          let currentSecond = currentTime.getSeconds();
+          digitalWatch.innerHTML = digitalTimeHandler(currentHour) + ':' + digitalTimeHandler(currentMinute) + ':' + digitalTimeHandler(currentSecond);
+      }
+
+      getCurrentHour();
+      getCurrentMinute();
+      getCurrentSecond();
+      getCurrentDigitalTime();
+
+      setInterval(getCurrentHour, 60000);
+      setInterval(getCurrentMinute, 60000);
+      setInterval(getCurrentSecond, 1000);
+      setInterval(getCurrentDigitalTime, 1000);
+
+  </script>
+</body>
+</html>
