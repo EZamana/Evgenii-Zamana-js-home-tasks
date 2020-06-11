@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>task1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="TLocalStorage.js"></script>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .container a {
+      text-decoration: none;
+      color: white;
+      display: block;
+      padding: 20px;
+      width: 250px;
+      text-align: center;
+      margin: 15px;
+      border-radius: 5px;
+    }
+
+    #addInfoButton {
+      background: green;
+    }
+
+    #getInfoButton {
+      background: red;
+    }
+
+    #deleteInfoButton {
+      background: blue;
+    }
+
+    #allInfoButton {
+      background: orange;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="buttons">
+      <a href="#" id="addInfoButton" onclick="addDrinkInfo()">Ввод информации о напитке</a>
+      <a href="#" id="getInfoButton" onclick="getDrinkInfo()">Получение информации о напитке</a>
+      <a href="#" id="deleteInfoButton" onclick="deleteDrink()">Удаление информации о напитке</a>
+      <a href="#" id="allInfoButton" onclick="getAllDrinks()">Перечень всех напитков</a>
+    </div>
+  </div>
+  <script>
+
+      let DrinkStorage = new TLocalStorage("Drinks");
+
+      DrinkStorage.Reset();
+
+      function isEmptyPromptValue(variableName, promptMessage) {
+          if (variableName == 0) {
+              for (let i = 0; ; i++) {
+                  variableName = prompt(promptMessage);
+                  if (variableName == null) {
+                      continue;
+                  } else if (variableName.length !== 0){
+                      return variableName
+                  }
+              }
+          }
+          return variableName
+      }
+
+      function lowerCaseAndTrimHandler(value) {
+          if (value !== null) {
+              return value.toLowerCase().trim()
+          } else {
+              return value
+          }
+      }
+
+      function addDrinkInfo() {
+          let drinkName = lowerCaseAndTrimHandler(prompt('Введите название напитка'));
+          if (drinkName == null) {
+              return
+          }
+          isEmptyPromptValue(drinkName, 'Введите название напитка');
+
+          let isAlcoholValue = confirm('Напиток алкогольный?');
+
+          let recipeValue = lowerCaseAndTrimHandler(prompt('Введите рецепт напитка'));
+          if (recipeValue == null) {
+              return
+          }
+          isEmptyPromptValue(recipeValue, 'Введите рецепт напитка');
+
+          DrinkStorage.addValue(drinkName, {isAlcohol: isAlcoholValue, recipe: recipeValue})
+      }
+
+      function getDrinkInfo() {
+          let drinkName = lowerCaseAndTrimHandler(prompt('Введите название напитка'));
+          if (drinkName == null) {
+              return
+          }
+          isEmptyPromptValue(drinkName, 'Введите название напитка');
+
+          let message;
+
+          if (DrinkStorage.getValue(drinkName) !== undefined) {
+              let hashWithRecInfo = DrinkStorage.getValue(drinkName);
+              let isAlcoholValue;
+              if (hashWithRecInfo.isAlcohol === true) {
+                  isAlcoholValue = 'да';
+              } else {
+                  isAlcoholValue = 'нет';
+              }
+              message = `напиток: ${drinkName} \nалкогольный: ${isAlcoholValue}\nрецепт приготовления:\n${hashWithRecInfo.recipe}`
+          } else {
+              message = `Такого напитка нет в хранилище`;
+          }
+
+          alert(message);
+      }
+
+      function deleteDrink() {
+          let drinkName = lowerCaseAndTrimHandler(prompt('Введите название напитка'));
+          if (drinkName == null) {
+              return
+          }
+          isEmptyPromptValue(drinkName, 'Введите название напитка');
+
+          let message;
+
+          if (DrinkStorage.deleteValue(drinkName) === true) {
+              message = 'Напиток был удалён их хранилища'
+          } else {
+              message = 'Такого напитка в хранилище нет'
+          }
+
+          alert(message);
+      }
+
+      function getAllDrinks() {
+          let message;
+
+          if (DrinkStorage.getKeys().length !== 0) {
+              message = `${DrinkStorage.getKeys()}`
+          } else {
+              message = `В хранилище нет напитов`
+          }
+
+          alert(message)
+      }
+  </script>
+</body>
+</html>
