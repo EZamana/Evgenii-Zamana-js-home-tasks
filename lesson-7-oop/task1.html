@@ -38,9 +38,9 @@
 
     arrWithQuestions[randomQuestionNumber].askQuestion();
 
-    let userAnswer = prompt('Enter your answer');
+    let userAnswer = parseInt(prompt('Enter your answer'));
 
-    arrWithQuestions[randomQuestionNumber].checkUserAnswer('userAnswer')
+    arrWithQuestions[randomQuestionNumber].checkUserAnswer(userAnswer)
   </script>
 </body>
 </html>
