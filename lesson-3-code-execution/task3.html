@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <script>
+      let values = [];
+      let total = 0;
+      let validationValues = "~`-=!@#$%^&*()_+qwertyuiop[]|{}asdfghjkl:;'zxcvbnm<>,./?ёйцукенгшщзхъфывапролджэячсмитьбю";
+      for (let i = 0; ; i++) {
+          let value = prompt("Введите число");
+          if (value === null) {
+              break;
+          }
+          value = value.trim();
+          value = value.toLowerCase();
+          let valueArray = value;
+          let isValid;
+          for (i = 0; i < valueArray.length; i++) {
+              let letter = valueArray[i];
+              let letterPosition = validationValues.indexOf(letter);
+              if (letterPosition >= 0) {
+                  isValid = false;
+                  break;
+              } else {
+                  isValid = true;
+              }
+          }
+          if (!isValid) {
+              break;
+          }
+          value = parseInt(value);
+          if (isNaN(value)) {
+              break;
+          } else {
+              values.push(value);
+          }
+      }
+      for (let i = 0; i < values.length; i++) {
+          total = total + values[i];
+      }
+      console.log(total);
+  </script>
+</body>
+</html>
