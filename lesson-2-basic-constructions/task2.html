@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <script>
+      function isNull(value) {
+          if (value === null) {
+              return true;
+          } else {
+              return false;
+          }
+      }
+      function isStringEmpty(value) {
+          if (value.length === 0) {
+              return true;
+          } else {
+              return false;
+          }
+      }
+      function getStringValue(promptMessage) {
+          let value;
+          for (let i = 0; ; i++) {
+              value = prompt(promptMessage);
+              if (isNull(value)) {
+                  continue;
+              }
+              value = value.trim();
+              if (isStringEmpty(value)) {
+                  continue;
+              } else {
+                  return value;
+              }
+          }
+      }
+      function getNumberValue(promptMessage) {
+          let value;
+          for (let i = 0; ; i++) {
+              value = prompt(promptMessage);
+              if (isNull(value)) {
+                  continue;
+              }
+              value = value.trim();
+              value = parseInt(value);
+              if (isNaN(value)) {
+                  continue;
+              } else {
+                  return value;
+              }
+          }
+      }
+      let firstName = getStringValue('Ваше имя?');
+      let lastName = getStringValue('Ваша фамилия?');
+      let middleName = getStringValue('Ваше отчество?');
+      let age = getNumberValue("Ваш возраст?");
+      let gender = confirm('Ваш пол мужской?');
+      let fullName = lastName + " " + firstName + " " + middleName;
+      let ageInDays = age * 365;
+      let ageAfterFiveYears = age + 5;
+      let pension;
+      if (gender) {
+          gender = "мужской"
+      } else {
+          gender = "женский"
+      }
+      if (age >= 60) {
+          pension = "да";
+      } else {
+          pension = "нет";
+      }
+      let message = 'Ваше ФИО:' + ' ' + fullName + '\n' + 'Ваш возраст в годах:' + ' ' + age + '\n'
+          + 'Ваш возраст в днях:' + ' ' + ageInDays + '\n' + 'Через 5 лет вам будет:' + ' ' +
+          ageAfterFiveYears + '\n' + 'Ваш пол:' + ' ' + gender + '\n' + 'Вы на пенсии:' + ' ' + pension;
+      alert(message);
+  </script>
+</body>
+</html>
