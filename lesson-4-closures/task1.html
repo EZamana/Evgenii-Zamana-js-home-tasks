@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <script>
+    let cellSize = 8;
+    for (let i = 1; i < cellSize + 1; i++) {
+       if (i % 2 === 0) {
+           let string = "";
+           for (let i = 1; i < cellSize + 1; i++) {
+               if (i % 2 === 0) {
+                   string = string + "#";
+               } else if (i % 2 !== 0) {
+                   string = string + " ";
+               }
+           }
+           console.log(string);
+       } else if (i % 2 !== 0) {
+           let string = "";
+           for (let i = 1; i < cellSize + 1; i++) {
+               if (i % 2 === 0) {
+                   string = string + " ";
+               } else if (i % 2 !== 0) {
+                   string = string + "#";
+               }
+           }
+           console.log(string);
+        }
+    }
+  </script>
+</body>
+</html>
