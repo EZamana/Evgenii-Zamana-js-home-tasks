@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+  <form name='mainForm'></form>
+  <script>
+      let Elements = [
+          {
+              fieldType: 'text',
+              label: 'Разработчики',
+              id: 'textDevs',
+              marginFromLabel: 50
+          },
+          {
+              fieldType: 'text',
+              label: 'Название сайта',
+              id: 'textSiteName',
+              marginFromLabel: 50
+          },
+          {
+              fieldType: 'text',
+              label: 'URL сайта',
+              id: 'textUrl',
+              marginFromLabel: 50
+          },
+          {
+              fieldType: 'number',
+              label: 'Дата запуска сайта',
+              id: 'numDateRelease',
+              marginFromLabel: 50
+          },
+          {
+              fieldType: 'number',
+              label: 'Поситетели в сутки',
+              id: 'numVisitors',
+              marginFromLabel: 50
+          },
+          {
+              fieldType: 'text',
+              label: 'Email для связи',
+              id: 'textEmail',
+              marginFromLabel: 50
+          },
+          {
+              fieldType: 'select',
+              label: 'Рубрика каталога',
+              id: 'selectCatalog',
+              option: ['здоровье', 'домашний уют', 'бытовая техника'],
+              marginFromLabel: 50
+          },
+          {
+              fieldType: 'radio',
+              label: 'Размещение',
+              radiosWithIds: {
+                  бесплатное: 'radFree',
+                  платное: 'radPaid',
+                  VIP: 'radVip',
+              },
+              name: 'host',
+              marginFromLabel: 50
+          },
+          {
+              fieldType: 'checkbox',
+              label: 'Разрешить отзывы',
+              id: 'checkReviews',
+              marginFromLabel: 50
+          },
+          {
+              fieldType: 'textarea',
+              label: 'Описание сайта',
+              id: 'areaSiteDesc',
+              rows: 10,
+              cols: 20,
+              marginFromLabel: 50
+          },
+          {
+              fieldType: 'submit',
+              value: 'Опубликовать',
+              id: 'subPost'
+          }
+      ];
+
+      let form = document.forms.mainForm;
+      let formChild = document.body.appendChild(form);
+
+      function generElemets(Arr) {
+          for (let i = 0; i < Arr.length; i++) {
+              for (let k in Arr[i]) {
+                  let ArrCurr = Arr[i];
+                  switch (ArrCurr[k]) {
+                      case 'text':
+                          generTextOrNumberField(ArrCurr);
+                          break;
+                      case 'number':
+                          generTextOrNumberField(ArrCurr);
+                          break;
+                      case 'select':
+                          generSelectField(ArrCurr);
+                          break;
+                      case 'radio':
+                          generRadioField(ArrCurr);
+                          break;
+                      case 'checkbox':
+                          generCheckboxField(ArrCurr);
+                          break;
+                      case 'textarea':
+                          generTextareaField(ArrCurr);
+                          break;
+                      case 'submit':
+                          generSubmitButton(ArrCurr);
+                          break;
+                  }
+              }
+          }
+      }
+
+      function createLabel(obj) {
+          let label = document.createElement('label');
+          for (let k in obj) {
+              if (k === 'marginFromLabel') {
+                  label.setAttribute('style', `margin-right: ${obj[k]}px`);
+              } else if (k === 'label') {
+                  label.innerText = obj[k];
+              }
+          }
+          return label;
+      }
+
+      function createDiv() {
+          let div = document.createElement('div');
+          return div;
+      }
+
+      function createInput() {
+          let input = document.createElement('input');
+          return input;
+      }
+
+      function generTextOrNumberField(obj) {
+          let div = createDiv();
+          let label = createLabel(obj);
+          let input = createInput();
+          for (let k in obj) {
+              if (k === 'fieldType') {
+                  input.setAttribute('type', obj[k]);
+              } else if (k === 'id') {
+                  label.setAttribute('for', obj[k]);
+                  input.setAttribute('id', obj[k]);
+              }
+          }
+          formChild.appendChild(div).appendChild(label);
+          formChild.appendChild(div).appendChild(input);
+      }
+
+      function generTextareaField(obj) {
+          let div = createDiv();
+          let label = createLabel(obj);
+          let textarea = document.createElement('textarea');
+          let br = document.createElement('br');
+          for (let k in obj) {
+              if (k === 'id') {
+                  textarea.setAttribute('id', obj[k]);
+              } else if (k === 'rows') {
+                  textarea.setAttribute('rows', obj[k]);
+              } else if (k === 'rows') {
+                  textarea.setAttribute('cols', obj[k]);
+              }
+          }
+          formChild.appendChild(div).appendChild(label);
+          formChild.appendChild(div).appendChild(br);
+          formChild.appendChild(div).appendChild(textarea);
+      }
+
+      function generSelectField(obj) {
+          let div = createDiv();
+          let label = createLabel(obj);
+          let select = document.createElement('select');
+          formChild.appendChild(div).appendChild(label);
+          for (let k in obj) {
+              if (k === 'id') {
+                  label.setAttribute('for', obj[k]);
+                  select.setAttribute('id', obj[k]);
+              } else if (typeof (obj[k]) === 'object') {
+                  let arr = obj[k];
+                  for (let i = 0; i < arr.length; i++) {
+                      let option = document.createElement('option');
+                      option.innerText = arr[i];
+                      formChild.appendChild(div).appendChild(select).appendChild(option);
+                  }
+              }
+          }
+      }
+
+      function generRadioField(obj) {
+          let div = createDiv();
+          let label = createLabel(obj);
+          let name;
+          formChild.appendChild(div).append(label);
+          for (let k in obj) {
+              if (k === 'name') {
+                  name = obj[k];
+              }
+          }
+          for (let k in obj) {
+              if (typeof (obj[k]) === 'object') {
+                  let objRadio = obj[k];
+                  for (let b in objRadio) {
+                      let labelRadio = document.createElement('label');
+                      let input = createInput();
+                      labelRadio.setAttribute('for', objRadio[b]);
+                      labelRadio.innerText = b;
+                      input.setAttribute('type', 'radio');
+                      input.setAttribute('id', objRadio[b]);
+                      input.setAttribute('name', name);
+                      formChild.appendChild(div).appendChild(input);
+                      formChild.appendChild(div).appendChild(labelRadio);
+                  }
+              }
+          }
+      }
+
+      /*функция generCheckboxField, такая же, как и generTextOrNumberField, но
+      generCheckboxField сделана отдельно, чтобы в ней можно было сетать атрибуты, которые не нужны текстовым и числовым инпутам
+       */
+      function generCheckboxField(obj) {
+          let div = createDiv();
+          let label = createLabel(obj);
+          let input = createInput();
+          for (let k in obj) {
+              if (k === 'fieldType') {
+                  input.setAttribute('type', obj[k]);
+              } else if (k === 'id') {
+                  label.setAttribute('for', obj[k]);
+                  input.setAttribute('id', obj[k]);
+              }
+          }
+          formChild.appendChild(div).appendChild(label);
+          formChild.appendChild(div).appendChild(input);
+      }
+
+      function generSubmitButton(obj) {
+          let div = createDiv();
+          let input = createInput();
+          for (let k in obj) {
+              if (k === 'fieldType') {
+                  input.setAttribute('type', obj[k]);
+              } else if (k === 'id') {
+                  input.setAttribute('id', obj[k]);
+              } else if (k === 'value') {
+                  input.setAttribute('value', obj[k]);
+              }
+          }
+          formChild.appendChild(div).appendChild(input);
+      }
+
+      generElemets(Elements);
+  </script>
+</body>
+</html>
